@@ -1,0 +1,27 @@
+name: ptsserv_sync
+
+on:
+  workflow_dispatch:
+  
+  repository_dispatch:
+    types: ptsserv_sync
+
+  push:
+    branches:
+      - main
+      
+env:
+    workenv_20: m3kktzlj
+    workenv_25: mp3210
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync to Gitlab
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DPRIVATE_DEFAULT }}
+        with:
+          source-repo: git@github.com:$workenv_20/$workenv_25.git
+          destination-repo: git@gitlab.com:$workenv_20/$workenv_25.git
